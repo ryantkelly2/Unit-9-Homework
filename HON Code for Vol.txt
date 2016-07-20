@@ -1,0 +1,53 @@
+install.packages("tseries")
+
+library(tseries)
+
+HONdata <- get.hist.quote('HON',quote="Close")
+
+HONret <- log(lag(HONdata)) - log(HONdata)
+
+HONvol <- sd(HONret) * sqrt(250) * 100
+
+
+
+## volatility
+get
+Vol <- function(d, logrets)
+{
+
+	var = 0
+
+	lam = 0
+
+	varlist <- c()
+
+	for (r in logrets) {
+
+		lam = lam*(1 - 1/d) + 1
+	
+	var = (1 - 1/lam)*var + (1/lam)*r^2
+
+		varlist <- c(varlist, var)
+
+	}
+
+	sqrt(varlist)
+}
+
+
+# Recreate Figure 6.12 in the text on page 155
+
+volHonest <- Vol(10,HONret)
+
+volHONest2 <- Vol(30,HONret)
+
+volHONest3 <- Vol(100,HONret)
+
+plot(volHonest,type="l")
+
+lines(volHONest2,type="l",col="red")
+
+lines(volHONest3, type = "l", col="blue")
+
+HONvol
+[1] 36.55776

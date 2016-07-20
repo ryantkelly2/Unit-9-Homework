@@ -1,0 +1,21 @@
+library(fpp) #fpp package must be installed first
+
+data(ukcars)
+plot(ukcars)
+
+fitc <- decompose(ukcars)
+plot(fitc)
+
+ukcarsadj <- seasadj(fitc)
+plot(ukcarsadj)
+
+ukcars2 <- ts(c(ukcars[1:75],ukcars[76]+500,ukcars[77:113]),start=c(1977,1),frequency=4)
+plot(ukcars2)
+
+fitc2 <- decompose(ukcars2)
+plot(fitc2)
+
+ukcarsadj2 <- seasadj(fitc2)
+plot(ukcarsadj2)
+
+
